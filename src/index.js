@@ -3,10 +3,10 @@ import { initializeApp } from "firebase/app";
 import {
   getFirestore,
   collection,
-  getDocs,
   addDoc,
   deleteDoc,
   doc,
+  onSnapshot,
 } from "firebase/firestore";
 
 // Init firebase app
@@ -19,15 +19,13 @@ const db = getFirestore();
 const colRef = collection(db, "books");
 
 // Get collection data
-getDocs(colRef)
-  .then((snapshot) => {
-    const books = [];
-    snapshot.docs.forEach((doc) => {
-      books.push({ ...doc.data(), id: doc.id });
-    });
-    console.log(books);
-  })
-  .catch((err) => console.log(err.message));
+onSnapshot(colRef, (snapshot) => {
+  const books = [];
+  snapshot.docs.forEach((doc) => {
+    books.push({ ...doc.data(), id: doc.id });
+  });
+  console.log(books);
+});
 
 // Adding documents
 
