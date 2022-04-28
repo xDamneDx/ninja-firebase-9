@@ -1,0 +1,25 @@
+{
+  "name": "ninja-firebase-9",
+  "version": "1.0.0",
+  "description": "Project from Net Ninja \"Modern JavaScript - from Novice to Ninja\" course.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xDamneDx/ninja-firebase-9.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xDamneDx/ninja-firebase-9/issues"
+  },
+  "homepage": "https://github.com/xDamneDx/ninja-firebase-9#readme",
+  "devDependencies": {
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2"
+  }
+}
