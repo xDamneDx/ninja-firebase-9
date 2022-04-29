@@ -18,6 +18,7 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  onAuthStateChanged,
   signOut,
 } from "firebase/auth";
 
@@ -40,7 +41,7 @@ onSnapshot(q, (snapshot) => {
   snapshot.docs.forEach((doc) => {
     books.push({ ...doc.data(), id: doc.id });
   });
-  console.log(books);
+  // console.log(books);
 });
 
 // Adding documents
@@ -72,7 +73,7 @@ deleteBookForm.addEventListener("submit", (e) => {
 // Get a single document
 const docRef = doc(db, "books", "D6KrJ2k7CVKsIJLyiymE");
 
-onSnapshot(docRef, (doc) => console.log(doc.data(), doc.id));
+// onSnapshot(docRef, (doc) => console.log(doc.data(), doc.id));
 
 // Updating a document
 const updateForm = document.querySelector(".update");
@@ -98,7 +99,7 @@ signupForm.addEventListener("submit", (e) => {
 
   createUserWithEmailAndPassword(auth, email, password)
     .then((cred) => {
-      console.log("User created:", cred.user);
+      // console.log("User created:", cred.user);
       signupForm.reset();
     })
     .catch((err) => console.log(err.message));
@@ -115,7 +116,7 @@ loginForm.addEventListener("submit", (e) => {
   signInWithEmailAndPassword(auth, email, password)
     .then((cred) => {
       loginForm.reset();
-      console.log("User logged in:", cred.user);
+      // console.log("User logged in:", cred.user);
     })
     .catch((err) => {
       console.log(err.message);
@@ -126,9 +127,14 @@ const logoutButton = document.querySelector(".logout");
 logoutButton.addEventListener("click", () => {
   signOut(auth)
     .then(() => {
-      console.log("The user signed out");
+      // console.log("The user signed out");
     })
     .catch((err) => {
       console.log(err.message);
     });
+});
+
+// Subscribing to auth changes
+onAuthStateChanged(auth, (user) => {
+  console.log("user status changed:", user);
 });
