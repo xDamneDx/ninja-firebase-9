@@ -14,12 +14,14 @@ import {
   getDoc,
   updateDoc,
 } from "firebase/firestore";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 // Init firebase app
 initializeApp(firebaseConfig);
 
 // Init services
 const db = getFirestore();
+const auth = getAuth();
 
 // Collection ref
 const colRef = collection(db, "books");
@@ -79,4 +81,20 @@ updateForm.addEventListener("submit", (e) => {
   }).then(() => {
     updateForm.reset();
   });
+});
+
+// Signing users up
+const signupForm = document.querySelector(".signup");
+signupForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const email = signupForm.email.value;
+  const password = signupForm.password.value;
+
+  createUserWithEmailAndPassword(auth, email, password)
+    .then((cred) => {
+      console.log("User created:", cred.user);
+      signupForm.reset();
+    })
+    .catch((err) => console.log(err.message));
 });
