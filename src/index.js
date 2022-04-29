@@ -36,12 +36,12 @@ const colRef = collection(db, "books");
 const q = query(colRef, orderBy("createdAt"));
 
 // Realtime collection data
-onSnapshot(q, (snapshot) => {
+const unsubCol = onSnapshot(q, (snapshot) => {
   const books = [];
   snapshot.docs.forEach((doc) => {
     books.push({ ...doc.data(), id: doc.id });
   });
-  // console.log(books);
+  console.log(books);
 });
 
 // Adding documents
@@ -73,7 +73,7 @@ deleteBookForm.addEventListener("submit", (e) => {
 // Get a single document
 const docRef = doc(db, "books", "D6KrJ2k7CVKsIJLyiymE");
 
-// onSnapshot(docRef, (doc) => console.log(doc.data(), doc.id));
+const unsubDoc = onSnapshot(docRef, (doc) => console.log(doc.data(), doc.id));
 
 // Updating a document
 const updateForm = document.querySelector(".update");
@@ -135,6 +135,15 @@ logoutButton.addEventListener("click", () => {
 });
 
 // Subscribing to auth changes
-onAuthStateChanged(auth, (user) => {
+const unsubAuth = onAuthStateChanged(auth, (user) => {
   console.log("user status changed:", user);
+});
+
+// Unsubscribing from changes (auth, doc & db)
+const unsubButton = document.querySelector(".unsub");
+unsubButton.addEventListener("click", () => {
+  console.log("Unsubscribing");
+  unsubCol();
+  unsubDoc();
+  unsubAuth();
 });
